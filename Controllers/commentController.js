@@ -13,11 +13,6 @@ exports.addCommentToPost = asyncHandler(async(req,res,next)=>{
             text : req.body.text
         }
     })
-    // No need to provide anything but status 
-    // res.status(201).json({
-    //     message :"Add a Comment To A Post",
-    //     new_comment
-    // })
 
     res.sendStatus(205)
 })
@@ -30,10 +25,6 @@ exports.deleteCommentFromPost = asyncHandler(async(req,res,next)=>{
           id:commentId,
         },
       })
-    // res.status(200).json({
-    //     message :"Delete a Comment To A Post",
-    //     delete_comment
-    // })
 
     res.sendStatus(205)
 })

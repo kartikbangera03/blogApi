@@ -10,7 +10,15 @@ exports.getAllPosts = asyncHandler(async(req,res,err)=>{
         console.log(" GETTING ALL POSTS FOR AUTHOR ......")
         const posts = await prisma.post.findMany({
             include:{
-                comments :true
+                comments :{
+                    orderBy : {
+                        createdAt : 'desc'
+                    }
+                }
+                
+            },
+            orderBy :{
+                updatedAt : 'desc'
             }
         })
 
@@ -34,20 +42,12 @@ exports.addPost = asyncHandler(async(req,res)=>{
         }
     })
 
-    // console.log(newPost);
-
-    // res.status(201).json({
-    //     newPost
-    // })
-
     res.sendStatus(201)
 })
 
 exports.updatePost = asyncHandler(async(req,res)=>{
     const postId =  parseInt(req.params.postId)
 
-    // console.log("REQUEST BODY ....")
-    // console.log(req.body)
     if(req.body.isPublished){
         req.body.isPublished = true ? req.body.isPublished==="true" : false;
     }
@@ -58,14 +58,6 @@ exports.updatePost = asyncHandler(async(req,res)=>{
         },
         data:req.body
     })
-    // console.log("UPDATED POST .......")
-    // console.log(updated_post)
-    // console.log(req.user)
-    // Should return just the status and nothing else 
-    // res.status(200).json({
-    //     message :"Update a Posts - Title , Text , PublishedStatus",
-    //     updated_post
-    // })
 
     res.sendStatus(205)
 })
@@ -87,12 +79,6 @@ exports.deletePost = asyncHandler(async(req,res)=>{
           id:postId,
         },
       })
-
-       // Should return just the status and nothing else 
-    // res.status(200).json({
-    //     message :"Delete A Post",
-    //     delete_post
-    // })
 
     res.sendStatus(205)
 })
